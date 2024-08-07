@@ -1,0 +1,6 @@
+@ApiGatewat_HostAddress = http://localhost:5032
+
+GET {{ApiGatewat_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

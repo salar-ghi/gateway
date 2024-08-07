@@ -1,0 +1,53 @@
+{
+    "GlobalConfiguration": {
+        "BaseUrl": "http://localhost:5000"
+    },
+    "Routes": [
+        {
+            "UpstreamPathTemplate": "/gateway/endpoint1",
+            "UpstreamHttpMethod": [ "GET", "POST", "DELETE" ],
+            "DownstreamPathTemplate": "/api/endpoint1",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                { "Host": "localhost", "Port": 5005 },
+                { "Host": "localhost", "Port": 5006 }
+            ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKeys": [ "Schema1", "Schema2" ],
+                "AllowedScopes": []
+            },
+            ""
+        },
+        {
+            "UpstreamPathTemplate": "/gateway/products",
+            "UpstreamHttpMethod": [ "GET" ],
+            "DownstreamPathTemplate": "/api/products",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5001
+                }
+            ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "Key",
+                "AllowedScopes": []
+            },
+            "RouteClaimsRequirement": {
+                "UserType": "registered"
+            }
+        },
+        {
+            "UpstreamPathTemplate": "/gateway/invoice",
+            "UpstreamHttpMethod": [ "GET" ],
+            "DownstreamPathTemplate": "/api/invoice",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5002
+                }
+            ]
+        }
+    ]
+}
