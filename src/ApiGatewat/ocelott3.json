@@ -1,0 +1,58 @@
+{
+    "GlobalConfiguration": {
+        "BaseUrl": "http://localhost:5000"
+    },
+    "Routes": [
+        {
+            "UpstreamPathTemplate": "/gateway/apiOne",
+            "UpstreamHttpMethod": [ "GET" ],
+            //"UpstreamHeaderTemplates": { // dictionary
+            //    "country": "uk", // 1st header
+            //    "version": "v1" // 2nd header
+            //},
+            "DownstreamPathTemplate": "/api/Message",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 6001
+                }
+            ]
+            //"AuthenticationOptions": {
+            //    "AuthenticationProviderKeys": [ "Schema1", "Schema2" ]
+            //    //"AllowedScopes": []
+            //}
+        },
+        //{
+        //    "UpstreamPathTemplate": "/gateway/apiOneTwo",
+        //    "UpstreamHttpMethod": [ "GET" ],
+        //    "DownstreamPathTemplate": "/api/User",
+        //    "DownstreamScheme": "https",
+        //    "DownstreamHostAndPorts": [
+        //        {
+        //            "Host": "localhost",
+        //            "Port": 6002
+        //        }
+        //    ],
+        //    //"AuthenticationOptions": {
+        //    //    "AuthenticationProviderKey": "Key",
+        //    //    //"AllowedScopes": []
+        //    //},
+        //    "RouteClaimsRequirement": {
+        //        "UserType": "registered"
+        //    }
+        //},
+        //{
+        //    "UpstreamPathTemplate": "/gateway/invoice",
+        //    "UpstreamHttpMethod": [ "GET" ],
+        //    "DownstreamPathTemplate": "/api/invoice",
+        //    "DownstreamScheme": "http",
+        //    "DownstreamHostAndPorts": [
+        //        {
+        //            "Host": "localhost",
+        //            "Port": 5002
+        //        }
+        //    ]
+        //}
+    ]
+}

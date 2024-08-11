@@ -5,7 +5,9 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2EF2DDF8-2855-45B1-B4AF-A34C303C1AC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGatewat", "src\ApiGatewat\ApiGatewat.csproj", "{D2418C4B-9B11-477C-8650-32201A9644AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGatewat", "src\ApiGatewat\ApiGatewat.csproj", "{D2418C4B-9B11-477C-8650-32201A9644AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcelotGateway", "src\OcelotGateway\OcelotGateway.csproj", "{76BAC92A-63CD-4CA1-BEB8-F7754628236C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +19,17 @@ Global
 		{D2418C4B-9B11-477C-8650-32201A9644AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2418C4B-9B11-477C-8650-32201A9644AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2418C4B-9B11-477C-8650-32201A9644AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76BAC92A-63CD-4CA1-BEB8-F7754628236C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76BAC92A-63CD-4CA1-BEB8-F7754628236C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76BAC92A-63CD-4CA1-BEB8-F7754628236C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76BAC92A-63CD-4CA1-BEB8-F7754628236C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D2418C4B-9B11-477C-8650-32201A9644AD} = {2EF2DDF8-2855-45B1-B4AF-A34C303C1AC7}
+		{76BAC92A-63CD-4CA1-BEB8-F7754628236C} = {2EF2DDF8-2855-45B1-B4AF-A34C303C1AC7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DD354DED-6917-499D-832F-DCC01F56FD68}

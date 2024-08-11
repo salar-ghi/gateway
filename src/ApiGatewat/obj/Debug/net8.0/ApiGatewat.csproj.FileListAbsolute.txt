@@ -40,3 +40,5 @@ C:\Users\s.ghahremani\source\repos\gateway\src\ApiGatewat\obj\Debug\net8.0\refin
 C:\Users\s.ghahremani\source\repos\gateway\src\ApiGatewat\obj\Debug\net8.0\ApiGatewat.pdb
 C:\Users\s.ghahremani\source\repos\gateway\src\ApiGatewat\obj\Debug\net8.0\ApiGatewat.genruntimeconfig.cache
 C:\Users\s.ghahremani\source\repos\gateway\src\ApiGatewat\obj\Debug\net8.0\ref\ApiGatewat.dll
+C:\Users\s.ghahremani\source\repos\gateway\src\ApiGatewat\obj\Debug\net8.0\ApiGatewat.sourcelink.json
+C:\Users\s.ghahremani\source\repos\gateway\src\ApiGatewat\bin\Debug\net8.0\ocelott3.json

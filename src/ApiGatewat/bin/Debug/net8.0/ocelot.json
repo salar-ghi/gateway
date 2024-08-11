@@ -1,31 +1,31 @@
 {
     "GlobalConfiguration": {
-        "BaseUrl": "http://localhost:5000"
+        "BaseUrl": "http://localhost:5000/"
     },
     "Routes": [
         {
-            "UpstreamPathTemplate": "/gateway/products",
-            "UpstreamHttpMethod": [ "GET" ],
-            "DownstreamPathTemplate": "/api/products",
-            "DownstreamScheme": "http",
+            "DownstreamPathTemplate": "/api/Message",
+            "DownstreamScheme": "https",
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 5001
+                    "Port": 6001
                 }
-            ]
+            ],
+            "UpstreamPathTemplate": "/apiOne",
+            "UpstreamHttpMethod": [ "GET" ]
         },
         {
-            "UpstreamPathTemplate": "/gateway/invoice",
-            "UpstreamHttpMethod": [ "GET" ],
-            "DownstreamPathTemplate": "/api/invoice",
-            "DownstreamScheme": "http",
+            "DownstreamPathTemplate": "/api/WeatherForecast",
+            "DownstreamScheme": "https",
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 5002
+                    "Port": 5000
                 }
-            ]
+            ],
+            "UpstreamPathTemplate": "/WeatherForecast",
+            "UpstreamHttpMethod": [ "GET" ]
         }
     ]
 }
