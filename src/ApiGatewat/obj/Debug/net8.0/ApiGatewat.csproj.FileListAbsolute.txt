@@ -42,3 +42,11 @@ C:\Users\s.ghahremani\source\repos\gateway\src\ApiGatewat\obj\Debug\net8.0\ApiGa
 C:\Users\s.ghahremani\source\repos\gateway\src\ApiGatewat\obj\Debug\net8.0\ref\ApiGatewat.dll
 C:\Users\s.ghahremani\source\repos\gateway\src\ApiGatewat\obj\Debug\net8.0\ApiGatewat.sourcelink.json
 C:\Users\s.ghahremani\source\repos\gateway\src\ApiGatewat\bin\Debug\net8.0\ocelott3.json
+C:\Users\s.ghahremani\source\repos\gateway\src\ApiGatewat\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\s.ghahremani\source\repos\gateway\src\ApiGatewat\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\s.ghahremani\source\repos\gateway\src\ApiGatewat\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\s.ghahremani\source\repos\gateway\src\ApiGatewat\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\s.ghahremani\source\repos\gateway\src\ApiGatewat\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\s.ghahremani\source\repos\gateway\src\ApiGatewat\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\s.ghahremani\source\repos\gateway\src\ApiGatewat\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\s.ghahremani\source\repos\gateway\src\ApiGatewat\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll

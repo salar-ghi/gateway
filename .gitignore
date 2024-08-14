@@ -1,2 +1,11 @@
 .vs
 /.vs
+
+.git
+
+bin
+/.bin
+
+Debug
+/Debug
+/.Debug

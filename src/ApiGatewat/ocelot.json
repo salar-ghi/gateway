@@ -13,7 +13,11 @@
                 }
             ],
             "UpstreamPathTemplate": "/apiOne",
-            "UpstreamHttpMethod": [ "GET", "Post" ]
+            "UpstreamHttpMethod": [ "GET", "Post" ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "Bearer",
+                "AllowedScopes": []
+            }
         },
         {
             "DownstreamPathTemplate": "/api/Products",
