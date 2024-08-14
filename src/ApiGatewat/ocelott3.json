@@ -17,11 +17,11 @@
                     "Host": "localhost",
                     "Port": 6001
                 }
-            ]
-            //"AuthenticationOptions": {
-            //    "AuthenticationProviderKeys": [ "Schema1", "Schema2" ]
-            //    //"AllowedScopes": []
-            //}
+            ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKeys": [ "Schema1", "Schema2" ],
+                "AllowedScopes": []
+            }
         },
         //{
         //    "UpstreamPathTemplate": "/gateway/apiOneTwo",

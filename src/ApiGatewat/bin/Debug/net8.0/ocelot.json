@@ -13,7 +13,31 @@
                 }
             ],
             "UpstreamPathTemplate": "/apiOne",
-            "UpstreamHttpMethod": [ "GET" ]
+            "UpstreamHttpMethod": [ "GET", "Post" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/Products",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 6001
+                }
+            ],
+            "UpstreamPathTemplate": "/Apione/Products",
+            "UpstreamHttpMethod": [ "GET", "Post" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/Products/{id}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 6001
+                }
+            ],
+            "UpstreamPathTemplate": "/Apione/Products/{id}",
+            "UpstreamHttpMethod": [ "GET", "Post" ]
         },
         {
             "DownstreamPathTemplate": "/api/WeatherForecast",
