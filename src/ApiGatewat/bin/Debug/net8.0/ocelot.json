@@ -16,8 +16,11 @@
             "UpstreamHttpMethod": [ "GET", "Post" ],
             "AuthenticationOptions": {
                 "AuthenticationProviderKey": "Bearer",
-                "AllowedScopes": []
-            }
+                "AllowedScopes": [ "api1" ]
+            },
+            //"RouteClaimsRequirement": {
+            //    "Administrator": "true"
+            //}
         },
         {
             "DownstreamPathTemplate": "/api/Products",

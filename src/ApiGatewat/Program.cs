@@ -4,6 +4,7 @@ using Ocelot.Middleware;
 using Ocelot.Values;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using ApiGatewat.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,9 +16,14 @@ var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var key = Encoding.UTF8.GetBytes(jwtSettings["Secret"]);
 
 builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    //.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
+        options.Authority = "https://localhost:5010/api/Auth/Index";
+        options.Audience = "ApiOne";
+        options.RequireHttpsMetadata = false;
+
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -39,7 +45,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
-builder.Services.AddOcelot(builder.Configuration);
+builder.Services
+    .AddOcelot(builder.Configuration)
+    ;
 
 
 //builder.Services.AddAuthorization(options =>
@@ -70,23 +78,26 @@ app.UseHttpsRedirection();
 //app.UseAuthentication();
 //app.UseAuthorization();
 
+//app.UseMiddleware<CheckIdentityMiddleware>();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 });
 
-app.Use(async (context, next) =>
-{
-    // check if the request requires authorization
-    var requiresAuthorization = context.Request.Path.StartsWithSegments("/apiOne");
-    if (requiresAuthorization && !context.User.Identity.IsAuthenticated)
-    {
-        context.Response.Redirect("https://localhost:5010/api/Auth/Index");
-        return;
-    }
-    await next();
 
-});
+//app.Use(async (context, next) =>
+//{
+//    // check if the request requires authorization
+//    var requiresAuthorization = context.Request.Path.StartsWithSegments("/apiOne");
+//    if (requiresAuthorization && !context.User.Identity.IsAuthenticated)
+//    {
+//        context.Response.Redirect("https://localhost:5010/api/Auth/Index");
+//        return;
+//    }
+//    await next();
+
+//});
 
 await app.UseOcelot();
+//app.UseOcelot().Wait();
 app.Run();
