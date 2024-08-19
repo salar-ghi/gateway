@@ -16,7 +16,7 @@
             "UpstreamHttpMethod": [ "GET", "Post" ],
             "AuthenticationOptions": {
                 "AuthenticationProviderKey": "Bearer",
-                "AllowedScopes": [ "api1" ]
+                "AllowedScopes": []
             },
             //"RouteClaimsRequirement": {
             //    "Administrator": "true"

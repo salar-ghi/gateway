@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ApiGatewat")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+25bd5cc4635ba4414e1a7f61771eef7897b1d3a3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c55895864537093b3b09b35b9af5fa1471cf3129")]
 [assembly: System.Reflection.AssemblyProductAttribute("ApiGatewat")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ApiGatewat")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

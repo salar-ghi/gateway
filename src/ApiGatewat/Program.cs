@@ -15,9 +15,12 @@ builder.Logging.SetMinimumLevel(LogLevel.Debug);
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var key = Encoding.UTF8.GetBytes(jwtSettings["Secret"]);
 
+builder.Services.AddCors();
+
+var authenticationProviderKey = "Bearer";
 builder.Services
     //.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddAuthentication("Bearer")
+    .AddAuthentication()
     .AddJwtBearer("Bearer", options =>
     {
         options.Authority = "https://localhost:5010/api/Auth/Index";
@@ -37,7 +40,6 @@ builder.Services
 
 
 
-builder.Services.AddCors();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -46,8 +48,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
 builder.Services
-    .AddOcelot(builder.Configuration)
-    ;
+    .AddOcelot(builder.Configuration);
 
 
 //builder.Services.AddAuthorization(options =>
@@ -78,12 +79,13 @@ app.UseHttpsRedirection();
 //app.UseAuthentication();
 //app.UseAuthorization();
 
-//app.UseMiddleware<CheckIdentityMiddleware>();
+app.UseCors();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 });
 
+// Define the protected routes
 
 //app.Use(async (context, next) =>
 //{
@@ -95,8 +97,14 @@ app.UseEndpoints(endpoints =>
 //        return;
 //    }
 //    await next();
-
 //});
+
+string[] protectedRoutes = { "/apiOne", "/Apione/Products" };
+var identityServiceUrl = "https://localhost:5010/api/Auth/Index";
+
+//?????????????????????????????
+//app.UseMiddleware<CheckAuthMiddleware>(identityServiceUrl, protectedRoutes);
+//app.UseMiddleware<CheckIdentityMiddleware>();
 
 await app.UseOcelot();
 //app.UseOcelot().Wait();

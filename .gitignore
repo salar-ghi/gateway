@@ -3,9 +3,11 @@
 
 .git
 
+obj
+/obj
+
 bin
-/.bin
+/bin
 
 Debug
 /Debug
-/.Debug
