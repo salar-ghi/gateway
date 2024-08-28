@@ -1,0 +1,87 @@
+{
+    //"DownstreamHttpAdapters": [
+    //    {
+    //        "Type": "Ocelot.DownstreamHttpAdapters.HttpClientAdapter.HttpClientAdapter",
+    //    }
+    //],
+    "GlobalConfiguration": {
+        "BaseUrl": "http://localhost:5000/"
+    },
+    "Routes": [
+        //{
+        //    "DownstreamPathTemplate": "/api/Message",
+        //    "DownstreamScheme": "https",
+        //    "DownstreamHostAndPorts": [
+        //        {
+        //            "Host": "localhost",
+        //            "Port": 6001
+        //        }
+        //    ],
+        //    "UpstreamPathTemplate": "/apiOne",
+        //    "UpstreamHttpMethod": [ "GET", "Post" ],
+        //    "AuthenticationOptions": {
+        //        "AuthenticationProviderKey": "Bearer",
+        //        "AllowedScopes": []
+        //    }
+        //    //"RouteClaimsRequirement": {
+        //    //    "Administrator": "true"
+        //    //}
+        //},
+        //{
+        //    "DownstreamPathTemplate": "/api/Products",
+        //    "DownstreamScheme": "https",
+        //    "DownstreamHostAndPorts": [
+        //        {
+        //            "Host": "localhost",
+        //            "Port": 6001
+        //        }
+        //    ],
+        //    "UpstreamPathTemplate": "/Apione/Products",
+        //    "UpstreamHttpMethod": [ "GET", "Post" ],
+        //    "LoadBalancer": {
+        //        "Type": "LeastConnection"
+        //    }
+        //},
+        {
+            "DownstreamPathTemplate": "/api/{everything}",
+            "DownstreamScheme": "https",
+            //"DownstreamHostAndPorts": "localhost:6001",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 6001
+                }
+            ],
+            "UpstreamPathTemplate": "/apione/{everything}",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+            "LoadBalancer": {
+                "Type": "LeastConnection"
+            },
+            "AuthenticationOptions": {
+                "Provider": "Bearer"
+            }
+        },
+        {
+            "DownstreamPathTemplate": "/api/Auth/{everything}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": "localhost:5010", // Replace with your Identity microservice host
+            "UpstreamPathTemplate": "/identity/{everything}",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+            "LoadBalancer": {
+                "Type": "LeastConnection"
+            }
+        }
+        //{
+        //    "DownstreamPathTemplate": "/api/WeatherForecast",
+        //    "DownstreamScheme": "https",
+        //    "DownstreamHostAndPorts": [
+        //        {
+        //            "Host": "localhost",
+        //            "Port": 5000
+        //        }
+        //    ],
+        //    "UpstreamPathTemplate": "/WeatherForecast",
+        //    "UpstreamHttpMethod": [ "GET" ]
+        //}
+    ]
+}

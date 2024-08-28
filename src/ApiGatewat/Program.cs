@@ -20,8 +20,15 @@ builder.Services.AddCors();
 var authenticationProviderKey = "Bearer";
 builder.Services
     //.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddAuthentication()
-    .AddJwtBearer("Bearer", options =>
+    .AddAuthentication(authenticationProviderKey)
+    //.AddCookie("Cookies", options =>
+    //{
+    //    options.LoginPath = "/Security/Login";
+    //    options.LogoutPath = "/Security/Logout";
+    //    options.AccessDeniedPath = "/Security/AccessDenied";
+    //    options.ReturnUrlParameter = "ReturnUrl";
+    //})
+    .AddJwtBearer(authenticationProviderKey, options =>
     {
         options.Authority = "https://localhost:5010/api/Auth/Index";
         options.Audience = "ApiOne";
@@ -49,6 +56,7 @@ builder.Services.AddSwaggerGen();
 builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
 builder.Services
     .AddOcelot(builder.Configuration);
+    //.AddDelegatingHandler<AuthDelegatingHandler>(true);
 
 
 //builder.Services.AddAuthorization(options =>
@@ -76,7 +84,7 @@ if (app.Environment.IsDevelopment())
 app.UseRouting();
 app.UseHttpsRedirection();
 
-//app.UseAuthentication();
+//app.UseAuthentication().UseOcelot().Wait();
 //app.UseAuthorization();
 
 app.UseCors();
@@ -106,6 +114,8 @@ var identityServiceUrl = "https://localhost:5010/api/Auth/Index";
 //app.UseMiddleware<CheckAuthMiddleware>(identityServiceUrl, protectedRoutes);
 //app.UseMiddleware<CheckIdentityMiddleware>();
 
-await app.UseOcelot();
-//app.UseOcelot().Wait();
+app.UseMiddleware<CheckIdentityMiddleware>();
+
+//await app.UseOcelot();
+app.UseOcelot().Wait();
 app.Run();

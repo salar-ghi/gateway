@@ -4,7 +4,7 @@
     },
     "Routes": [
         {
-            "DownstreamPathTemplate": "/api/Message",
+            "DownstreamPathTemplate": "/api/{everything}",
             "DownstreamScheme": "https",
             "DownstreamHostAndPorts": [
                 {
@@ -12,51 +12,29 @@
                     "Port": 6001
                 }
             ],
-            "UpstreamPathTemplate": "/apiOne",
-            "UpstreamHttpMethod": [ "GET", "Post" ],
-            "AuthenticationOptions": {
-                "AuthenticationProviderKey": "Bearer",
-                "AllowedScopes": []
+            "UpstreamPathTemplate": "/apione/{everything}",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+            "LoadBalancer": {
+                "Type": "LeastConnection"
             },
-            //"RouteClaimsRequirement": {
-            //    "Administrator": "true"
-            //}
+            "AuthenticationOptions": {
+                "Provider": "Bearer"
+            }
         },
         {
-            "DownstreamPathTemplate": "/api/Products",
+            "DownstreamPathTemplate": "/api/Auth/{everything}",
             "DownstreamScheme": "https",
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 6001
+                    "Port": 5010
                 }
             ],
-            "UpstreamPathTemplate": "/Apione/Products",
-            "UpstreamHttpMethod": [ "GET", "Post" ]
-        },
-        {
-            "DownstreamPathTemplate": "/api/Products/{id}",
-            "DownstreamScheme": "https",
-            "DownstreamHostAndPorts": [
-                {
-                    "Host": "localhost",
-                    "Port": 6001
-                }
-            ],
-            "UpstreamPathTemplate": "/Apione/Products/{id}",
-            "UpstreamHttpMethod": [ "GET", "Post" ]
-        },
-        {
-            "DownstreamPathTemplate": "/api/WeatherForecast",
-            "DownstreamScheme": "https",
-            "DownstreamHostAndPorts": [
-                {
-                    "Host": "localhost",
-                    "Port": 5000
-                }
-            ],
-            "UpstreamPathTemplate": "/WeatherForecast",
-            "UpstreamHttpMethod": [ "GET" ]
+            "UpstreamPathTemplate": "/identity/{everything}",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+            "LoadBalancer": {
+                "Type": "LeastConnection"
+            }
         }
     ]
 }
