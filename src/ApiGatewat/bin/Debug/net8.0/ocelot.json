@@ -3,8 +3,28 @@
         "BaseUrl": "http://localhost:5000/"
     },
     "Routes": [
+        //{
+        //    "DownstreamPathTemplate": "/api/{everything}",
+        //    "DownstreamScheme": "https",
+        //    "DownstreamHostAndPorts": [
+        //        {
+        //            "Host": "localhost",
+        //            "Port": 6001
+        //        }
+        //    ],
+        //    "UpstreamPathTemplate": "/apione/{everything}",
+        //    "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+        //    "LoadBalancer": {
+        //        "Type": "LeastConnection"
+        //    },
+        //    "AuthenticationOptions": {
+        //        "AuthenticationProviderKey": "Bearer",
+        //        //"Provider": "Bearer",
+        //        "AllowedScopes": []
+        //    }
+        //},
         {
-            "DownstreamPathTemplate": "/api/{everything}",
+            "DownstreamPathTemplate": "/api/Products",
             "DownstreamScheme": "https",
             "DownstreamHostAndPorts": [
                 {
@@ -12,13 +32,10 @@
                     "Port": 6001
                 }
             ],
-            "UpstreamPathTemplate": "/apione/{everything}",
-            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+            "UpstreamPathTemplate": "/Apione/Products",
+            "UpstreamHttpMethod": [ "GET", "Post" ],
             "LoadBalancer": {
                 "Type": "LeastConnection"
-            },
-            "AuthenticationOptions": {
-                "Provider": "Bearer"
             }
         },
         {

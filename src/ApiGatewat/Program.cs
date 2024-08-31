@@ -30,10 +30,10 @@ builder.Services
     //})
     .AddJwtBearer(authenticationProviderKey, options =>
     {
-        options.Authority = "https://localhost:5010/api/Auth/Index";
-        options.Audience = "ApiOne";
+        options.Authority = "https://localhost:5010/";
+        options.ClaimsIssuer = "NitroIdentityJwt";
+        //options.Audience = "ApiOne";
         options.RequireHttpsMetadata = false;
-
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -47,7 +47,7 @@ builder.Services
 
 
 
-
+builder.Services.AddHttpClient();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
