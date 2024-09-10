@@ -1,73 +1,61 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
-using Ocelot.Values;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ApiGatewat.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 builder.Logging.AddConsole();
 builder.Logging.SetMinimumLevel(LogLevel.Debug);
-// Add services to the container.
 
-var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-var key = Encoding.UTF8.GetBytes(jwtSettings["Secret"]);
+//var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+//var key = Encoding.UTF8.GetBytes(jwtSettings["Secret"]);
 
-builder.Services.AddCors();
-
-var authenticationProviderKey = "Bearer";
-builder.Services
-    //.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddAuthentication(authenticationProviderKey)
-    //.AddCookie("Cookies", options =>
-    //{
-    //    options.LoginPath = "/Security/Login";
-    //    options.LogoutPath = "/Security/Logout";
-    //    options.AccessDeniedPath = "/Security/AccessDenied";
-    //    options.ReturnUrlParameter = "ReturnUrl";
-    //})
-    .AddJwtBearer(authenticationProviderKey, options =>
-    {
-        options.Authority = "https://localhost:5010/";
-        options.ClaimsIssuer = "NitroIdentityJwt";
-        //options.Audience = "ApiOne";
-        options.RequireHttpsMetadata = false;
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = jwtSettings["Issuer"],
-            ValidAudience = jwtSettings["Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]))
-        };
-    });
+//builder.Services.AddCors();
+//builder.Services
+//    .AddAuthentication("Bearer")
+//    .AddJwtBearer("Bearer", options =>
+//    {
+//        options.Authority = "https://localhost:5010/";
+//        options.Audience = "NitroIdentity";
+//        options.ClaimsIssuer = "NitroIdentityJwt";
+//        //options.Audience = "ApiOne";
+//        options.RequireHttpsMetadata = false;
+//        options.TokenValidationParameters = new TokenValidationParameters
+//        {
+//            ValidateIssuer = true,
+//            ValidateAudience = true,
+//            ValidateIssuerSigningKey = true,
+//            ValidIssuer = jwtSettings["Issuer"],
+//            ValidAudience = jwtSettings["Audience"],
+//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]))
+//        };
+//    });
 
 
+//builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddHttpClient();
+//builder.Services.AddHttpClient();
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
-builder.Services
-    .AddOcelot(builder.Configuration);
-    //.AddDelegatingHandler<AuthDelegatingHandler>(true);
+//builder.Services.AddTransient<AuthDelegatingHandler>();
+
+var ocelotdata = builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+builder.Services.AddOcelot(builder.Configuration)
+    .AddDelegatingHandler<AuthDelegatingHandler>(true);
 
 
 //builder.Services.AddAuthorization(options =>
-//{
-//    options.AddPolicy("MultiAuthPolicy", policy =>
+//    options.AddPolicy("ApiScope", policy =>
 //    {
-//        policy.AddAuthenticationSchemes("Scheme1", "Scheme2");
 //        policy.RequireAuthenticatedUser();
-//    });
-//});
-
+//        policy.RequireClaim("scope", "api1");
+//    })
+//);
 
 
 var app = builder.Build();
@@ -79,7 +67,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseOcelot();
 
 app.UseRouting();
 app.UseHttpsRedirection();
@@ -114,8 +101,10 @@ var identityServiceUrl = "https://localhost:5010/api/Auth/Index";
 //app.UseMiddleware<CheckAuthMiddleware>(identityServiceUrl, protectedRoutes);
 //app.UseMiddleware<CheckIdentityMiddleware>();
 
-app.UseMiddleware<CheckIdentityMiddleware>();
+//app.UseMiddleware<CheckIdentityMiddleware>();
+//app.UseMiddleware<AuthDelegatingHandler>();
 
 //await app.UseOcelot();
+
 app.UseOcelot().Wait();
 app.Run();

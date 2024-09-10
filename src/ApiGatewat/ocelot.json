@@ -3,26 +3,24 @@
         "BaseUrl": "http://localhost:5000/"
     },
     "Routes": [
-        //{
-        //    "DownstreamPathTemplate": "/api/{everything}",
-        //    "DownstreamScheme": "https",
-        //    "DownstreamHostAndPorts": [
-        //        {
-        //            "Host": "localhost",
-        //            "Port": 6001
-        //        }
-        //    ],
-        //    "UpstreamPathTemplate": "/apione/{everything}",
-        //    "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-        //    "LoadBalancer": {
-        //        "Type": "LeastConnection"
-        //    },
-        //    "AuthenticationOptions": {
-        //        "AuthenticationProviderKey": "Bearer",
-        //        //"Provider": "Bearer",
-        //        "AllowedScopes": []
-        //    }
-        //},
+        {
+            "DownstreamPathTemplate": "/api/Message",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 6001
+                }
+            ],
+            "UpstreamPathTemplate": "/apione/Message",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+            //"DelegatingHandlers": [ "AuthDelegatingHandler" ],
+            //"AuthenticationOptions": {
+            //    "AuthenticationProviderKey": "Bearer",
+            //    "AllowedScopes": []
+            //},
+            "DelegatingHandlers": [ "AuthDelegatingHandler" ]
+        },
         {
             "DownstreamPathTemplate": "/api/Products",
             "DownstreamScheme": "https",
@@ -36,7 +34,12 @@
             "UpstreamHttpMethod": [ "GET", "Post" ],
             "LoadBalancer": {
                 "Type": "LeastConnection"
-            }
+            },
+            "DelegatingHandlers": [ "AuthDelegatingHandler" ]
+            //"AuthenticationOptions": {
+            //    "AuthenticationProviderKey": "Bearer",
+            //    "AllowedScopes": []
+            //}
         },
         {
             "DownstreamPathTemplate": "/api/Auth/{everything}",
@@ -47,6 +50,7 @@
                     "Port": 5010
                 }
             ],
+            "DelegatingHandlers": [ "AuthDelegatingHandler" ],
             "UpstreamPathTemplate": "/identity/{everything}",
             "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
             "LoadBalancer": {
