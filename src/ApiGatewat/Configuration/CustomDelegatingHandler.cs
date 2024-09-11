@@ -4,6 +4,7 @@ public class CustomDelegatingHandler : DelegatingHandler
 {
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
+        Console.Clear();
         // Custom logic before sending the request
         Console.WriteLine("Request URI: " + request.RequestUri);
 

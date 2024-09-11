@@ -3,6 +3,7 @@ using Ocelot.Middleware;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ApiGatewat.Configuration;
+using Ocelot.Values;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,30 +11,35 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.AddConsole();
 builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
-//var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-//var key = Encoding.UTF8.GetBytes(jwtSettings["Secret"]);
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+var key = Encoding.UTF8.GetBytes(jwtSettings["Secret"]);
 
 //builder.Services.AddCors();
-//builder.Services
-//    .AddAuthentication("Bearer")
-//    .AddJwtBearer("Bearer", options =>
-//    {
-//        options.Authority = "https://localhost:5010/";
-//        options.Audience = "NitroIdentity";
-//        options.ClaimsIssuer = "NitroIdentityJwt";
-//        //options.Audience = "ApiOne";
-//        options.RequireHttpsMetadata = false;
-//        options.TokenValidationParameters = new TokenValidationParameters
-//        {
-//            ValidateIssuer = true,
-//            ValidateAudience = true,
-//            ValidateIssuerSigningKey = true,
-//            ValidIssuer = jwtSettings["Issuer"],
-//            ValidAudience = jwtSettings["Audience"],
-//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]))
-//        };
-//    });
 
+var ocelotdata = builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+var authenticationProviderKey = "Bearer";
+builder.Services.AddAuthentication()
+    .AddJwtBearer(authenticationProviderKey, options =>
+    {
+        options.Authority = "https://localhost:5010/api/Auth/Index"; // auth server
+        options.Audience = "NitroIdentity"; // audience
+        options.ClaimsIssuer = "NitroIdentityJwt";
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings["Issuer"],
+            ValidAudience = jwtSettings["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+
+        };
+    })
+    .AddJwtBearer("AnotherAuthScheme", options =>
+    {
+        options.Authority = "https://localhost:5010/"; // auth server
+        options.Audience = "NitroIdentity"; // audience
+    });
 
 //builder.Services.AddHttpContextAccessor();
 
@@ -44,7 +50,7 @@ builder.Services.AddSwaggerGen();
 
 //builder.Services.AddTransient<AuthDelegatingHandler>();
 
-var ocelotdata = builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+
 builder.Services.AddOcelot(builder.Configuration)
     .AddDelegatingHandler<AuthDelegatingHandler>(true);
 
@@ -71,8 +77,9 @@ if (app.Environment.IsDevelopment())
 app.UseRouting();
 app.UseHttpsRedirection();
 
-//app.UseAuthentication().UseOcelot().Wait();
-//app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseOcelot().Wait();
 
 app.UseCors();
 app.UseEndpoints(endpoints =>
@@ -106,5 +113,7 @@ var identityServiceUrl = "https://localhost:5010/api/Auth/Index";
 
 //await app.UseOcelot();
 
-app.UseOcelot().Wait();
+
+//Console.Clear();
 app.Run();
+//Console.Clear();

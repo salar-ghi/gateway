@@ -3,44 +3,62 @@
         "BaseUrl": "http://localhost:5000/"
     },
     "Routes": [
+        //{
+        //    "UpstreamPathTemplate": "/apione/Message",
+        //    "DelegatingHandlers": [ "AuthDelegatingHandler" ],
+        //    "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+        //    "DownstreamScheme": "https",
+        //    "DownstreamHostAndPorts": [
+        //        {
+        //            "Host": "localhost",
+        //            "Port": 6001
+        //        }
+        //    ],
+        //    "DownstreamPathTemplate": "/api/Message",
+        //    "AuthenticationOptions": {
+        //        "AuthenticationProviderKeys": [ "Bearer", "AnotherAuthScheme" ],
+        //        "AllowedScopes": []
+        //    }
+        //},
         {
-            "DownstreamPathTemplate": "/api/Message",
-            "DownstreamScheme": "https",
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
                     "Port": 6001
                 }
             ],
-            "UpstreamPathTemplate": "/apione/Message",
-            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-            //"DelegatingHandlers": [ "AuthDelegatingHandler" ],
-            //"AuthenticationOptions": {
-            //    "AuthenticationProviderKey": "Bearer",
-            //    "AllowedScopes": []
-            //},
-            "DelegatingHandlers": [ "AuthDelegatingHandler" ]
-        },
-        {
-            "DownstreamPathTemplate": "/api/Products",
             "DownstreamScheme": "https",
-            "DownstreamHostAndPorts": [
-                {
-                    "Host": "localhost",
-                    "Port": 6001
-                }
-            ],
-            "UpstreamPathTemplate": "/Apione/Products",
-            "UpstreamHttpMethod": [ "GET", "Post" ],
-            "LoadBalancer": {
-                "Type": "LeastConnection"
+            "DownstreamPathTemplate": "/api/{everything}",
+            "UpstreamPathTemplate": "/api/mamad",
+            "UpstreamHttpMethod": [ "GET", "POST" ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKeys": [ "Bearer" ],
+                "AllowedScopes": []
             },
-            "DelegatingHandlers": [ "AuthDelegatingHandler" ]
-            //"AuthenticationOptions": {
-            //    "AuthenticationProviderKey": "Bearer",
-            //    "AllowedScopes": []
-            //}
+            "DelegatingHandlers": [
+                "AuthDelegatingHandler" // Ensure this matches the class name of your handler
+            ]
         },
+        //{
+        //    "DownstreamPathTemplate": "/api/Products",
+        //    "DownstreamScheme": "https",
+        //    "DownstreamHostAndPorts": [
+        //        {
+        //            "Host": "localhost",
+        //            "Port": 6001
+        //        }
+        //    ],
+        //    "UpstreamPathTemplate": "/Apione/Products",
+        //    "UpstreamHttpMethod": [ "GET", "Post" ],
+        //    "LoadBalancer": {
+        //        "Type": "LeastConnection"
+        //    },
+        //    //"DelegatingHandlers": [ "AuthDelegatingHandler" ]
+        //    //"AuthenticationOptions": {
+        //    //    "AuthenticationProviderKey": "Bearer",
+        //    //    "AllowedScopes": []
+        //    //}
+        //},
         {
             "DownstreamPathTemplate": "/api/Auth/{everything}",
             "DownstreamScheme": "https",
@@ -50,7 +68,6 @@
                     "Port": 5010
                 }
             ],
-            "DelegatingHandlers": [ "AuthDelegatingHandler" ],
             "UpstreamPathTemplate": "/identity/{everything}",
             "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
             "LoadBalancer": {
