@@ -3,13 +3,11 @@ using Ocelot.Middleware;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ApiGatewat.Configuration;
-using Ocelot.Values;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Logging.AddConsole();
-builder.Logging.SetMinimumLevel(LogLevel.Debug);
+
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var key = Encoding.UTF8.GetBytes(jwtSettings["Secret"]);
@@ -18,10 +16,15 @@ var key = Encoding.UTF8.GetBytes(jwtSettings["Secret"]);
 
 var ocelotdata = builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
 var authenticationProviderKey = "Bearer";
-builder.Services.AddAuthentication()
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = "Bearer";
+    options.DefaultChallengeScheme = "Bearer";
+
+})
     .AddJwtBearer(authenticationProviderKey, options =>
     {
-        options.Authority = "https://localhost:5010/api/Auth/Index"; // auth server
+        options.Authority = "https://localhost:5010/api/Auth"; // auth server
         options.Audience = "NitroIdentity"; // audience
         options.ClaimsIssuer = "NitroIdentityJwt";
         options.TokenValidationParameters = new TokenValidationParameters
@@ -34,25 +37,21 @@ builder.Services.AddAuthentication()
             IssuerSigningKey = new SymmetricSecurityKey(key),
 
         };
-    })
-    .AddJwtBearer("AnotherAuthScheme", options =>
-    {
-        options.Authority = "https://localhost:5010/"; // auth server
-        options.Audience = "NitroIdentity"; // audience
     });
 
-//builder.Services.AddHttpContextAccessor();
 
-//builder.Services.AddHttpClient();
+builder.Services.AddHttpClient();
+
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddTransient<AuthDelegatingHandler>();
+builder.Services.AddTransient<AuthDelegatingHandler>();
+builder.Services.AddOcelot(builder.Configuration).AddDelegatingHandler<AuthDelegatingHandler>(false) ;
 
 
-builder.Services.AddOcelot(builder.Configuration)
-    .AddDelegatingHandler<AuthDelegatingHandler>(true);
 
 
 //builder.Services.AddAuthorization(options =>
@@ -75,18 +74,17 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseRouting();
-app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseOcelot().Wait();
 
-app.UseCors();
+//app.UseCors();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
+
 });
 
+app.UseOcelot().Wait();
 // Define the protected routes
 
 //app.Use(async (context, next) =>
@@ -114,6 +112,6 @@ var identityServiceUrl = "https://localhost:5010/api/Auth/Index";
 //await app.UseOcelot();
 
 
-//Console.Clear();
+Console.Clear();
 app.Run();
 //Console.Clear();

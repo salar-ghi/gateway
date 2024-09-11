@@ -2,7 +2,12 @@
 
 public class AuthDelegatingHandler : DelegatingHandler
 {
-    
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    public AuthDelegatingHandler(IHttpContextAccessor httpContextAccessor)
+    {
+        //_context = context;
+        _httpContextAccessor = httpContextAccessor;
+    }
     //private readonly IHttpContextAccessor _httpContextAccessor;
     //public AuthDelegatingHandler(IHttpContextAccessor httpContextAccessor)
     //{ 
@@ -14,29 +19,21 @@ public class AuthDelegatingHandler : DelegatingHandler
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken ct)
     {
         Console.Clear();
-        Console.WriteLine($"+==========================> this is Requested Host URl =>{request.RequestUri}");
+        //Console.WriteLine($"+==========================> this is Requested Host URl =>{request.RequestUri}");
         var response = await base.SendAsync(request, ct);
-        //System.Diagnostics.Debug.WriteLine($"Response: {response.StatusCode}");
-        //Console.WriteLine($"status Code ========+++++++=======> {response.StatusCode}");
-        //if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-        //{
-        //    Console.WriteLine($"<<<<<<<<<<<<<<<<<<<<============================hello every body 2============================>>>>>>>>>>>>>>>>");
-        //    Console.WriteLine($"that's ok man.............................. bro :))))))");
+        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        {
+            //    var redirectUrl = $"http://localhost:3000/auth/signin?returnUrl={request.RequestUri}";
+            var redirectUrl = "https://localhost:5010/api/Auth/Index";
+            
+            var context = _httpContextAccessor.HttpContext;
 
-        //    var redirectUrl = $"http://localhost:3000/auth/signin?returnUrl={request.RequestUri}";
-        //    //var redirectUrl = "https://localhost:5010/api/Auth/Index";
-        //    //var redirect = await RedirectRequest(redirectUrl, ct);
-
-        //    using (var client = new HttpClient())
-        //    {
-        //        // new request
-        //        var redirectRequest = new HttpRequestMessage(HttpMethod.Get, redirectUrl);
-        //        return await client.SendAsync(redirectRequest, ct);
-        //    }
-        //    //context.Response.Redirect("https://localhost:5010/api/Auth/Index");
-        //    //return;
-        //}
-
+            using (var client = new HttpClient())
+            {
+                var redirectRequest = new HttpRequestMessage(HttpMethod.Get, request.RequestUri);
+                context.Response.Redirect(redirectUrl);
+            }
+        }
         return response;
     }
 }
