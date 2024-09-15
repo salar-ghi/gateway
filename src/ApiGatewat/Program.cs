@@ -3,6 +3,7 @@ using Ocelot.Middleware;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ApiGatewat.Configuration;
+using Ocelot.Values;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,15 +40,23 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder => builder.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
 
 builder.Services.AddHttpClient();
+//builder.Services.AddHttpClient().AddHttpMesssageHandler<AuthDelegatingHandler>();
 
-builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<AuthDelegatingHandler>();
 builder.Services.AddOcelot(builder.Configuration).AddDelegatingHandler<AuthDelegatingHandler>(false) ;
 
@@ -72,7 +81,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
+app.UseCors("AllowAllOrigins");
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
